@@ -642,20 +642,6 @@ node "$RUN_JS" search --keyword "<关键词>" --lat "$addrLat" --lng "$addrLng" 
 确认下单吗？
 ```
 
-**mac 客户端附加逻辑**：若 `get-client-type` 返回 `mac`，额外调用 `check_login.py` 检查美团微信小程序登录状态：
-
-```
-node "$RUN_JS" check-login
-```
-
-返回 `logged: false` 时，在确认信息下方追加：
-
-> 本专家支持微信快捷支付，您未登录过美团微信小程序，使用微信扫码登录后可享受快捷支付
->
-> ![美团微信小程序登录二维码]({SKILL_DIR}/references/mt_login.png)
-
-返回 `logged: true` 或非 mac 客户端时，无需追加任何内容。
-
 - 用户说「确认」「好的」「下单」→ 执行下单
 - 用户说「换一个」「不对」→ 回到 Step B3 重新选择
 
@@ -669,18 +655,7 @@ node "$RUN_JS" order --product-id "<productId>" --poi-id "<poiId>" --city-id "$C
 
 **下单成功**（`ok: true`，且 `success: true`）：
 
-解析返回 JSON，提取 `orderId`、`payShortLink`、`payQrCodeImage` 和 `WeixinPay-Required` 字段。
-
-
-#### 情况一：微信支付（`WeixinPay-Required`）
-
-向用户展示：
-
-> 🎉 下单成功！订单号：[orderId]
-
-同时本次使用微信支付，WeixinPay-Required:{WeixinPay-Required}，以向用户申请支付授权
-
-#### 情况二：常规支付（`WeixinPay-Required` 为空）
+解析返回 JSON，提取 `orderId`、`payShortLink` 和 `payQrCodeImage` 字段。
 
 向用户展示：
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * huisheng-coupon-tool 统一入口脚本
+ * meituan-living 统一入口脚本
  *
  * 跨平台（macOS / Windows）统一调度，AI 只需执行:
  *   node run.js <command> [options]
@@ -12,7 +12,6 @@
  *   auth-get-code [--env test|prod]  获取授权链接
  *   auth-poll-token               获取用户授权结果
  *   qrcode <url>                  获取二维码图片URL（服务端生成）
- *   qrcode <url> [client_id]      生成二维码PNG
  *   issue                         领券
  *   hotword --city-id <id>        热搜词查询
  *   search --keyword <kw> --lat <lat> --lng <lng> --city-id <id> [--page N] [--page-size N] [--query-id Q] [--request-id R] [--max-distance-km D]
@@ -993,41 +992,10 @@ commands.order = function (argv) {
           ok: true, success: true,
           orderId: String(dataBlock.orderId || ''),
           payShortLink: dataBlock.payShortLink || '',
-          payQrCodeImage: dataBlock.payUrlQrCode || '',
-          'WeixinPay-Required': dataBlock.wxPaymentCode || ''
+          payQrCodeImage: dataBlock.payUrlQrCode || ''
         });
       } else {
         out({ ok: false, success: false, error: 'API_ERROR', code: data && data.code, message: (data && data.message) || '下单失败' });
-      }
-    })
-    .catch(function (e) {
-      out({ ok: false, success: false, error: e.message });
-    });
-};
-
-/**
- * check-login — 检查美团微信小程序登录状态
- * 用法: node run.js check-login
- *
- * Token 从 pt-passport 缓存自动读取，不通过命令行传递。
- * 直接用 Node.js https 发请求，避免 Windows Python SSL 兼容问题。
- */
-commands['check-login'] = function () {
-  const token = getCachedToken();
-  if (!token) fail('NO_TOKEN', { message: '未登录或 Token 已过期，请先登录' });
-
-  const apiUrl = 'https://click.meituan.com/cps/ai/product/checkLoginMtMiniProgram';
-  const body = {
-    clientSource: 'coupon-fusion-workbuddy',
-    userParamDTO: { token: token }
-  };
-  httpsPost(apiUrl, body)
-    .then(function (resp) {
-      const data = resp.data;
-      if (data && data.code === 200 && data.success) {
-        out({ ok: true, success: true, logged: !!data.data });
-      } else {
-        out({ ok: false, success: false, error: 'API_ERROR', code: data && data.code, message: (data && data.message) || '校验失败' });
       }
     })
     .catch(function (e) {
@@ -1084,7 +1052,6 @@ Commands:
   location                      Get recent location
   location-by-address --address <addr>  Get location by address
   order --product-id <pid> --poi-id <pid> --city-id <id> --uuid <u>
-  check-login                   Check WeChat mini-program login status
   logout                        Logout
   clear-device-token            Clear device token`);
   process.exit(0);

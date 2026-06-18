@@ -74,8 +74,7 @@ def place_order(product_id: str, poi_id: str, token: str,
                 "success": True,
                 "orderId": str(data_block.get("orderId", "")),
                 "payShortLink": data_block.get("payShortLink", ""),
-                "payQrCodeImage": data_block.get("payUrlQrCode", ""),
-                "WeixinPay-Required": data_block.get("wxPaymentCode") or ""
+                "payQrCodeImage": data_block.get("payUrlQrCode", "")
             }
         else:
             return {
