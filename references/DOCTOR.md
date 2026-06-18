@@ -67,7 +67,7 @@ req.end();
 ### A3 Token 状态检测
 
 ```bash
-python3 ${CODEBUDDY_PLUGIN_ROOT}/scripts/auth.py token-verify
+python3 ${SKILL_DIR}/scripts/auth.py token-verify
 ```
 
 **结果展示：**
@@ -79,12 +79,12 @@ python3 ${CODEBUDDY_PLUGIN_ROOT}/scripts/auth.py token-verify
 
 ### A4 鉴权操作日志
 
-日志路径：`/tmp/huisheng/huisheng_auth.log`（由 `tempfile.gettempdir()` 决定）
+日志路径：`os.tmpdir()/meituan-living/auth.log`（由 `tempfile.gettempdir()` 决定）
 
 按接口分类展示，每个接口取最新一条：
 
 ```bash
-python3 ${CODEBUDDY_PLUGIN_ROOT}/scripts/diag_auth_log.py
+python3 ${SKILL_DIR}/scripts/diag_auth_log.py
 ```
 
 字段说明：
@@ -96,13 +96,13 @@ python3 ${CODEBUDDY_PLUGIN_ROOT}/scripts/diag_auth_log.py
 
 ### A5 发券接口日志
 
-日志路径：`/tmp/huisheng/huisheng_issue.log`（由 `tempfile.gettempdir()` 决定，跨平台一致）
+日志路径：`os.tmpdir()/meituan-living/issue.log`（由 `tempfile.gettempdir()` 决定，跨平台一致）
 
 - **写入方式**：每次发券**追加**一条，不覆盖历史记录
 - **读取方式**：读取**最新一条**（最后一行）并解密后展示
 
 ```bash
-python3 ${CODEBUDDY_PLUGIN_ROOT}/scripts/diag_issue_log.py
+python3 ${SKILL_DIR}/scripts/diag_issue_log.py
 ```
 
 重点排查：
@@ -118,14 +118,14 @@ python3 ${CODEBUDDY_PLUGIN_ROOT}/scripts/diag_issue_log.py
 python3 -c "
 import json
 from pathlib import Path
-t = json.loads((Path.home()/'.workbuddy/credentials/meituan-living-deals-assistant/token.json').read_text())
+t = json.loads((Path.home()/'.meituan-living/credentials/token.json').read_text())
 print(t.get('user_token',''))
 "
 ```
 
 再执行发券：
 ```bash
-python3 ${CODEBUDDY_PLUGIN_ROOT}/scripts/issue.py --token <上一步获取的token>
+python3 ${SKILL_DIR}/scripts/issue.py --token <上一步获取的token>
 ```
 
 展示原始 JSON 返回，不套用话术模板，直接给用户看原始数据。
@@ -138,8 +138,7 @@ python3 ${CODEBUDDY_PLUGIN_ROOT}/scripts/issue.py --token <上一步获取的tok
 python3 -c "
 import json
 from pathlib import Path
-import os
-config = json.loads((Path(os.environ['CODEBUDDY_PLUGIN_ROOT'])/'scripts/config.json').read_text())
+config = json.loads((Path('${SKILL_DIR}')/'scripts/config.json').read_text())
 ai_scene = config.get('aiScene', '')
 masked = (ai_scene[:6] + '****' + ai_scene[-6:]) if len(ai_scene) > 12 else ai_scene
 print(json.dumps({'aiScene': masked, 'exists': bool(ai_scene)}, ensure_ascii=False))

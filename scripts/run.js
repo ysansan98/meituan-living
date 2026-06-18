@@ -37,7 +37,7 @@ const SCRIPTS_DIR = __dirname;
 const SKILL_DIR = path.dirname(SCRIPTS_DIR);
 const CLIENT_ID = 'c6f50b5a1e2f4e2bb00a3e2f58df3ced';
 const PT_PASSPORT_BIN = path.join(SCRIPTS_DIR, 'node_modules', '.bin', 'pt-passport');
-const AUTH_DIR = path.join(require('os').homedir(), '.workbuddy', 'credentials', 'meituan-living-deals-assistant');
+const AUTH_DIR = path.join(require('os').homedir(), '.meituan-living', 'credentials');
 const PYTHON = findPython();
 
 // 动态获取 certifi 证书路径，用于修复 macOS Python SSL 证书问题
@@ -84,7 +84,7 @@ function runPython(scriptName, args) {
       stdio: ['pipe', 'pipe', 'pipe'],
       cwd: SCRIPTS_DIR,
       env: Object.assign({}, process.env, sslEnv, {
-        WORKBUDDY_AUTH_FILE: path.join(AUTH_DIR, 'token.json'),
+        MEITUAN_LIVING_AUTH_FILE: path.join(AUTH_DIR, 'token.json'),
         NODE_OPTIONS: ''
       })
     });
@@ -223,7 +223,7 @@ commands.init = function () {
 
   // 7. 检测客户端类型
   var clientType = (function () {
-    var envType = (process.env.WORKBUDDY_CLIENT_TYPE || '').toLowerCase();
+    var envType = (process.env.MEITUAN_LIVING_CLIENT_TYPE || '').toLowerCase();
     if (envType === 'mac' || envType === 'windows' || envType === 'miniprogram') return envType;
     if (envType === 'pc') return process.platform === 'darwin' ? 'mac' : 'windows';
     if (process.platform === 'darwin') return 'mac';
@@ -240,7 +240,7 @@ commands.init = function () {
  * 返回: mac / windows / miniprogram
  */
 commands['get-client-type'] = function () {
-  var envType = (process.env.WORKBUDDY_CLIENT_TYPE || '').toLowerCase();
+  var envType = (process.env.MEITUAN_LIVING_CLIENT_TYPE || '').toLowerCase();
   if (envType === 'mac' || envType === 'windows' || envType === 'miniprogram') {
     out({ ok: true, clientType: envType });
     return;
@@ -519,8 +519,8 @@ commands.issue = function (argv) {
   const COUPON_ISSUE_PATH = '/fulishemini/couponActivity/sendCouponWork';
   const CONFIG_FILE = path.join(SCRIPTS_DIR, 'config.json');
   const os = require('os');
-  const LOG_DIR = path.join(os.tmpdir(), 'huisheng');
-  const LOG_FILE = path.join(LOG_DIR, 'huisheng_issue.log');
+  const LOG_DIR = path.join(os.tmpdir(), 'meituan-living');
+  const LOG_FILE = path.join(LOG_DIR, 'issue.log');
 
   // ── 工具函数 ──────────────────────────────────────────────
   function loadConfig() {
@@ -956,7 +956,7 @@ commands.order = function (argv) {
 
   // 内部自行判断客户端类型
   var clientType = (function () {
-    var envType = (process.env.WORKBUDDY_CLIENT_TYPE || '').toLowerCase();
+    var envType = (process.env.MEITUAN_LIVING_CLIENT_TYPE || '').toLowerCase();
     if (envType === 'mac' || envType === 'windows' || envType === 'miniprogram') return envType;
     if (envType === 'pc') return process.platform === 'darwin' ? 'mac' : 'windows';
     if (process.platform === 'darwin') return 'mac';

@@ -11,8 +11,8 @@ import tempfile
 from pathlib import Path
 
 AUTH_KEY = "meituan-c-user-auth"
-LOG_FILE = Path(tempfile.gettempdir()) / "huisheng" / "huisheng_issue.log"
-TOKEN_FILE = Path.home() / ".workbuddy" / "credentials" / "meituan-living-deals-assistant" / "token.json"
+LOG_FILE = Path(tempfile.gettempdir()) / "meituan-living" / "issue.log"
+TOKEN_FILE = Path.home() / ".meituan-living" / "credentials" / "token.json"
 CONFIG_FILE = Path(__file__).parent / "config.json"
 
 

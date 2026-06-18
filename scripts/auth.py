@@ -27,16 +27,16 @@ CLIENT_ID = "c6f50b5a1e2f4e2bb00a3e2f58df3ced"
 def _resolve_auth_file() -> Path:
     """
     跨平台确定存储路径，优先级：
-    1. 环境变量 WORKBUDDY_AUTH_FILE（显式指定，最高优先级）
-    2. ~/.workbuddy/credentials/meituan-order/token.json
+    1. 环境变量 MEITUAN_LIVING_AUTH_FILE（显式指定，最高优先级）
+    2. ~/.meituan-living/credentials/token.json
     """
     import os
 
-    env_path = os.environ.get("WORKBUDDY_AUTH_FILE")
+    env_path = os.environ.get("MEITUAN_LIVING_AUTH_FILE")
     if env_path:
         return Path(env_path)
 
-    return Path.home() / ".workbuddy" / "credentials" / "meituan-living-deals-assistant" / "token.json"
+    return Path.home() / ".meituan-living" / "credentials" / "token.json"
 
 
 AUTH_FILE = _resolve_auth_file()
