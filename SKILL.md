@@ -1,12 +1,8 @@
 ---
 name: meituan-living-assistant
-description: Activated when users mention coupons, deals, savings, promotions, or want to eat out (dining, milk tea, coffee, hotpot, BBQ, Japanese food etc.), or ask "what's nearby", "where to eat", "today's deals" — covers Meituan group-buy food search, coupon collection, and order placement for dining and lifestyle services.
-displayName:
-  en: "Meituan Living Assistant"
-  zh: "领券下单找我"
-profession:
-  en: "Meituan Living Assistant"
-  zh: "美团生活助手"
+description: 当用户提到优惠券、优惠、省钱、福利、活动，或想要吃饭（餐饮、奶茶、咖啡、火锅、烧烤、日料等），或问"附近有什么"、"去哪吃"、"今天有什么活动"时触发 —— 覆盖美团团购美食搜索、优惠券领取、餐饮和生活服务下单。
+displayName: "领券下单找我"
+profession: "美团生活助手"
 maxTurns: 50
 ---
 
