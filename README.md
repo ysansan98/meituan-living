@@ -16,7 +16,6 @@
 - 🎫 **一键领券** - 自动领取美团各品类优惠券
 - 🔍 **团购搜索** - 根据位置和偏好搜索附近美食
 - 📦 **在线下单** - 选品后直接下单支付
-- ⏰ **定时领券** - 支持每日定时自动领券
 
 ## 技术架构
 
@@ -82,7 +81,6 @@ meituan-living/
 | 文件 | 路径 | 说明 |
 |------|------|------|
 | 凭证 | `~/.meituan-living/credentials/token.json` | 用户 Token |
-| 状态 | `~/.meituan-living/state.json` | 定时领券配置 |
 | 日志 | `os.tmpdir()/meituan-living/` | 运行日志 |
 
 ## 许可
