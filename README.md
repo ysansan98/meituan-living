@@ -19,10 +19,10 @@
 
 ## 技术架构
 
-- **入口**: `scripts/run.js` - 统一 Node.js 入口
-- **认证**: `scripts/auth.py` - 设备 Token 管理
-- **依赖**: `scripts/vendor/cliguard/` - CLIGuard 签名模块
-- **文档**: `SKILL.md` - Skill 定义与流程说明
+- **入口**: `skills/meituan-living/scripts/run.js` - 统一 Node.js 入口
+- **认证**: `skills/meituan-living/scripts/auth.py` - 设备 Token 管理
+- **依赖**: `skills/meituan-living/scripts/vendor/cliguard/` - CLIGuard 签名模块
+- **文档**: `skills/meituan-living/SKILL.md` - Skill 定义与流程说明
 
 ## 环境要求
 
@@ -33,7 +33,7 @@
 ## 安装
 
 ```bash
-cd scripts
+cd skills/meituan-living/scripts
 npm install
 ```
 
@@ -45,35 +45,37 @@ npm install
 
 ```bash
 # 环境初始化
-node scripts/run.js init
+node skills/meituan-living/scripts/run.js init
 
 # 领券
-node scripts/run.js issue
+node skills/meituan-living/scripts/run.js issue
 
 # 搜索商品
-node scripts/run.js search --keyword "火锅" --lat "39.9" --lng "116.3" --city-id "1"
+node skills/meituan-living/scripts/run.js search --keyword "火锅" --lat "39.9" --lng "116.3" --city-id "1"
 
 # 下单
-node scripts/run.js order --product-id <pid> --poi-id <pid> --city-id <id> --uuid <uuid>
+node skills/meituan-living/scripts/run.js order --product-id <pid> --poi-id <pid> --city-id <id> --uuid <uuid>
 ```
 
 ## 目录结构
 
 ```
 meituan-living/
-├── SKILL.md                    # Skill 定义文档
 ├── README.md                   # 本文件
-├── references/
-│   ├── DOCTOR.md              # 诊断手册
-│   └── mt_login.png           # 登录二维码
-└── scripts/
-    ├── run.js                 # 统一入口
-    ├── auth.py                # 认证模块
-    ├── config.json            # 配置文件
-    ├── package.json           # 依赖声明
-    ├── *.py                   # 各功能脚本
-    └── vendor/
-        └── cliguard/          # CLIGuard SDK
+└── skills/
+    └── meituan-living/
+        ├── SKILL.md            # Skill 定义文档
+        ├── references/
+        │   ├── DOCTOR.md      # 诊断手册
+        │   └── mt_login.png   # 登录二维码
+        └── scripts/
+            ├── run.js         # 统一入口
+            ├── auth.py        # 认证模块
+            ├── config.json    # 配置文件
+            ├── package.json   # 依赖声明
+            ├── *.py           # 各功能脚本
+            └── vendor/
+                └── cliguard/  # CLIGuard SDK
 ```
 
 ## 数据存储
